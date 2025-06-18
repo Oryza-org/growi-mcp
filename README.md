@@ -10,7 +10,20 @@
 * **ページの更新**: 既存のページを更新
 * **ページの検索**: キーワードでページを検索
 
+## 技術仕様
+
+* **MCP SDK**: @modelcontextprotocol/sdk v1.12.3
+* **実装言語**: TypeScript (ESM)
+* **Node.js**: >= 18
+* **APIクライアント**: Axios
+* **スキーマ検証**: Zod
+
 ## インストール
+
+### 前提条件
+
+* Node.js 18以上
+* npm または yarn
 
 ### ローカルでの実行（推奨）
 
@@ -79,6 +92,53 @@ npm install -g github:cer12u/growi-mcp
 2. 「管理」→「API設定」に移動
 3. 新しいAPIトークンを作成（適切な権限を付与）
 
+### 環境変数
+
+以下の環境変数を設定する必要があります：
+
+- `GROWI_API_URL`: GrowiインスタンスのURL（例: https://your-growi.com）
+- `GROWI_API_TOKEN`: Growi APIアクセストークン
+
+## 開発
+
+### ビルドとテスト
+
+```bash
+# 開発用ウォッチモード
+npm run watch
+
+# テスト実行
+npm test
+
+# テスト監視モード
+npm run test:watch
+
+# 単一テストファイルの実行
+npm test -- src/tools/create-page.test.ts
+```
+
+### MCPツール一覧
+
+1. **growi_list_pages** - ページ一覧取得
+   - `limit` (number, optional): 取得するページ数の上限
+   - `path` (string, optional): フィルターするパス
+
+2. **growi_get_page** - 特定ページ取得
+   - `path` (string, required): ページパス
+
+3. **growi_create_page** - ページ作成
+   - `path` (string, required): 作成するページのパス
+   - `body` (string, required): ページの内容
+
+4. **growi_update_page** - ページ更新
+   - `path` (string, required): 更新するページのパス
+   - `body` (string, required): 新しいページ内容
+
+5. **growi_search_pages** - ページ検索
+   - `q` (string, required): 検索クエリ
+   - `limit` (number, optional): 取得する結果数の上限
+   - `offset` (number, optional): ページネーション用オフセット
+
 ## 使用例
 
 ### ページ一覧の取得
@@ -106,3 +166,15 @@ npm install -g github:cer12u/growi-mcp
 ```
 "growi_search_pagesで、「Growi」というキーワードを含むページを検索して"
 ```
+
+## トラブルシューティング
+
+### よくある問題
+
+1. **認証エラー**: GROWI_API_TOKENが正しく設定されているか確認
+2. **接続エラー**: GROWI_API_URLが正しく、ネットワーク接続があることを確認
+3. **ビルドエラー**: Node.js 18以上が使用されているか確認
+
+### ログの確認
+
+MCPサーバーのログは、Claude Desktopのログファイルで確認できます。エラーの詳細情報が含まれています。
