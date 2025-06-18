@@ -60,6 +60,40 @@ npm run build
 
 `/path/to/growi-mcp`は実際のリポジトリのパスに置き換えてください。
 
+### Claude Codeでの設定
+
+Claude Codeでは`claude mcp add`コマンドを使用してMCPサーバーを追加できます：
+
+```bash
+# プロジェクトレベルで設定（チーム共有可能）
+claude mcp add --scope project growi node /path/to/growi-mcp/dist/index.js \
+  --env GROWI_API_URL=https://your-growi-instance.com \
+  --env GROWI_API_TOKEN=your_api_token_here
+
+# ユーザーレベルで設定（複数プロジェクトで利用可能）
+claude mcp add --scope user growi node /path/to/growi-mcp/dist/index.js \
+  --env GROWI_API_URL=https://your-growi-instance.com \
+  --env GROWI_API_TOKEN=your_api_token_here
+
+# ローカルレベルで設定（現在のプロジェクトのみ、プライベート）
+claude mcp add --scope local growi node /path/to/growi-mcp/dist/index.js \
+  --env GROWI_API_URL=https://your-growi-instance.com \
+  --env GROWI_API_TOKEN=your_api_token_here
+```
+
+#### Claude Code管理コマンド
+
+```bash
+# 設定されているMCPサーバーの一覧表示
+claude mcp list
+
+# 特定のサーバーの詳細表示
+claude mcp get growi
+
+# サーバーの削除
+claude mcp remove growi
+```
+
 ### その他のインストール方法
 
 ```bash

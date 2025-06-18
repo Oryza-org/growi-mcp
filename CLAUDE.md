@@ -71,7 +71,21 @@ MCPサーバー実行には以下の環境変数が必須:
 - `GROWI_API_URL` - GrowiインスタンスのURL
 - `GROWI_API_TOKEN` - Growi APIアクセストークン
 
+### Claude Code設定コマンド
+MCPサーバーの追加（プロジェクトスコープ推奨）:
+```bash
+claude mcp add --scope project growi node /path/to/growi-mcp/dist/index.js \
+  --env GROWI_API_URL=https://your-growi-instance.com \
+  --env GROWI_API_TOKEN=your_api_token_here
+```
+
+管理コマンド:
+- `claude mcp list` - サーバー一覧表示
+- `claude mcp get growi` - サーバー詳細表示  
+- `claude mcp remove growi` - サーバー削除
+
 ### 重要な実装詳細
-- StdioServerTransportを使用してClaude Desktopとの標準入出力通信
+- StdioServerTransportを使用してClaude Desktop/Codeとの標準入出力通信
 - 従来のツールハンドラーとMCP CallToolResult間の適合レイヤー
 - エラーハンドリングはisErrorフラグ付きでMCP準拠形式に変換
+- Claude Codeでは`claude mcp add`コマンドによる動的設定が可能
