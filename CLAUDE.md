@@ -89,3 +89,28 @@ claude mcp add --scope project growi node /path/to/growi-mcp/dist/index.js \
 - 従来のツールハンドラーとMCP CallToolResult間の適合レイヤー
 - エラーハンドリングはisErrorフラグ付きでMCP準拠形式に変換
 - Claude Codeでは`claude mcp add`コマンドによる動的設定が可能
+
+## MCPサーバーテスト状況
+
+### 実行済みテスト (2025-06-18)
+- ✅ **ページ一覧取得** (`growi_list_pages`): 正常動作
+  - 10件のページが正常に取得できることを確認
+  - 技術書類、プロジェクト関連のページが表示される
+- ✅ **特定ページ取得** (`growi_get_page`): 正常動作
+  - `/技術書類/GROWI/GROWI MCP` ページの内容が正常に取得できることを確認
+- ✅ **ページ更新** (`growi_update_page`): 正常動作
+  - `/技術書類/GROWI/GROWI MCP` ページの更新が成功
+- ❌ **ページ検索** (`growi_search_pages`): 認証エラー
+  - GrowiのAPIからHTMLログインページが返される
+  - 認証トークンまたはAPIエンドポイントの設定に問題の可能性
+  - Unity、Discord、GROWIキーワードでの検索すべてで同じエラー
+
+### 現在のMCP設定
+- APIエンドポイント: `https://growi.zequt.com`
+- 認証: APIトークン設定済み
+- スコープ: プロジェクト (.mcp.json)
+
+### 既知の問題
+- 検索機能のみ認証エラーが発生
+- 他のAPI機能（一覧取得、ページ取得）は正常動作
+- 問題は検索API特有の認証要件またはGrowiインスタンス設定の可能性

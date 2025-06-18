@@ -46,10 +46,20 @@ export class ApiClient {
   }
   
   async updatePage(path: string, body: string, overwrite = true) {
-    return this.client.post('/_api/v3/page', {
-      path,
+    // First, get the current page to obtain pageId and revisionId
+    const pageResponse = await this.getPage(path);
+    const page = pageResponse.data.page;
+    
+    if (!page || !page._id || !page.revision || !page.revision._id) {
+      throw new Error(`Page not found or missing required fields: ${path}`);
+    }
+    
+    // Update the page using PUT method with pageId and revisionId
+    return this.client.put('/_api/v3/page', {
+      pageId: page._id,
+      revisionId: page.revision._id,
       body,
-      grant: 1,
+      grant: page.grant || 1,
       overwrite
     });
   }
